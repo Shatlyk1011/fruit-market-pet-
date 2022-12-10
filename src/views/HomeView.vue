@@ -1,18 +1,25 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Products :products="products"/>
+    <!-- <Spinner /> -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Products from '@/components/Products.vue';
+import getCollection from '@/composables/getCollection';
+import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    Products, Spinner
+  },
+
+  setup() {
+    const {error, products, } = getCollection('products')
+
+    return {error, products, }
   }
 }
 </script>

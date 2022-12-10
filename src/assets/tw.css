@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", sans-serif;
+}
+
+body {
+  @apply bg-slate-200;
+}
+
+button,
+.btn {
+  @apply inline-block px-6 py-2 text-white bg-slate-500  hover:bg-slate-400 transition-all tracking-wide rounded;
+}
+
+button:disabled {
+  @apply opacity-60 bg-slate-200 text-slate-500 cursor-not-allowed;
+}
+
+.error {
+  @apply text-red-400 text-sm font-medium;
+}
+
+*::selection {
+  @apply bg-slate-400 text-slate-800;
+}
