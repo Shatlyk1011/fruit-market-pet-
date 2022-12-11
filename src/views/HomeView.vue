@@ -9,6 +9,7 @@
 import Products from '@/components/Products.vue';
 import getCollection from '@/composables/getCollection';
 import Spinner from '@/components/Spinner.vue'
+import {ref, computed} from 'vue'
 
 export default {
   name: 'HomeView',
@@ -17,9 +18,22 @@ export default {
   },
 
   setup() {
-    const {error, products, } = getCollection('products')
+    const {error, products, getColl } = getCollection('products')
+    // console.log(getColl)
+    const filteredAuto = getColl.then((res) => {
+      res.filter(product => {
+        if(product.category == 'phone') {
+          console.log(product)
+          return
+        } else 
+        // console.log(product)
+        return
+        
+      })
+      // console.log(filteredAuto)
+    })
 
-    return {error, products, }
+    return {error, products, filteredAuto}
   }
 }
 </script>

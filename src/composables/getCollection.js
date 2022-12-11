@@ -4,11 +4,22 @@ import { projectFirestore } from "../firebase/config";
 const getCollection = (collection, query) => {
   const products = ref(null);
   const error = ref(null);
+  // const jobFilter = ref(null);
 
-  // register the firestore collection reference
   let collectionRef = projectFirestore
     .collection(collection)
     .orderBy("createdAt", "desc");
+
+  //for filters
+  const getColl = collectionRef.get().then((doc) => {
+    let res = [];
+    doc.forEach((doc) => {
+      res.push({ ...doc.data() });
+    });
+    return res;
+    // jobFilter.value = res;
+  });
+  //
 
   if (query) {
     collectionRef = collectionRef.where(...query);
@@ -19,6 +30,7 @@ const getCollection = (collection, query) => {
       let results = [];
       snap.docs.forEach((doc) => {
         doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
+        // console.log("1doc", doc.data());
       });
       products.value = results;
       error.value = null;
@@ -34,7 +46,7 @@ const getCollection = (collection, query) => {
     onInvalidate(() => unsub());
   });
 
-  return { error, products };
+  return { error, products, getColl };
 };
 
 export default getCollection;

@@ -28,7 +28,7 @@
       <div class="flex flex-col gap-1">
         <label >Выберите фото</label>
         <div class="flex gap-3 items-center">
-        <label for="image" class="text-xs px-3 py-[5px] bg-slate-200 ring-2 ring-slate-300 self-start rounded hover:bg-slate-300 hover:text-black/70 hover:shadow transition-all duration-75 cursor-pointer active:translate-y-1 active:scale-95"> фото
+        <label for="image" class="text-xs px-3 py-[5px] bg-slate-200 ring-2 ring-slate-300 self-start rounded hover:bg-slate-300 hover:text-black/70 hover:shadow transition-all  cursor-pointer active:translate-y-1 active:scale-95 select-none"> фото
         </label>
         <div v-if="image" class="text-xs">{{image.name}}</div>
       </div>
@@ -72,7 +72,6 @@ import router from '@/router';
         let selected = e.target.files[0]
         if(selected && imageTypes.includes(selected.type)) {
           image.value = selected
-          imageError.value = null
           console.log(e.target.files[0])
         } else {
           image.value = null

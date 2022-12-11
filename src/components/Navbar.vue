@@ -11,7 +11,7 @@
       <router-link class="px-2 py-1 rounded active:scale-95 active:translate-y-[2px] transition-transform hover:shadow-inner" to="MyProducts">Мои товары</router-link>
       <button @click="unAuth">Выйти</button>
     </div>
-    <div v-if="!user" class="flex gap-4 ">
+    <div v-else class="flex gap-4 ">
       <router-link class="btn" :to="{name: 'Signup'}">Регистрация</router-link>
       <router-link class="btn" :to="{name: 'Login'}">Войти</router-link>
     </div>
@@ -28,8 +28,8 @@ import {useRouter} from 'vue-router'
     name: 'Navbar',
     
     setup() {
-      const {user} = getUser()
       const {error, logout, isPending} = useLogout()
+      const {user} = getUser()
 
       const router = useRouter()
       const unAuth = async () => {
@@ -40,7 +40,7 @@ import {useRouter} from 'vue-router'
       }
 
 
-      return {user, unAuth}
+      return {error, user, unAuth}
     }
   }
 </script>

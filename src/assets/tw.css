@@ -17,7 +17,8 @@ button,
   @apply inline-block px-6 py-2 text-white bg-slate-500  hover:bg-slate-400 transition-all tracking-wide rounded;
 }
 
-button:disabled {
+button:disabled,
+.btn:disabled {
   @apply opacity-60 bg-slate-200 text-slate-500 cursor-not-allowed;
 }
 
