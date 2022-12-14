@@ -3,7 +3,7 @@
     <div>
       <div class="text-base font-medium">{{comment.author}}</div>
       <div class="text-sm">{{comment.title}}</div>
-      <div class="text-xs text-slate-500">{{comment.createdAt}} назад</div>
+      <div class="text-xs` text-slate-500 text-xs">{{comment.createdAt}} назад</div>
     </div>
     <div class="flex flex-col gap-1 items-start absolute bottom-0 right-6">
       <div class="relative">
@@ -20,8 +20,10 @@
 <script>
 import getCollection from "@/composables/getCollection";
 import { computed } from "vue";
-import { formatDistanceToNow } from "date-fns";
 import { projectFirestore } from "../firebase/config";
+
+import { formatDistance } from "date-fns";
+import {ru} from 'date-fns/locale'
   export default {
     name: 'CommentsView',
 
@@ -30,11 +32,14 @@ import { projectFirestore } from "../firebase/config";
     setup(props) {
       const {products: comments} = getCollection('comments', ['docId', '==', props.id])
 
+      const date = new Date()
       const formatDate = computed(() => {
         if(comments.value) {
           return comments.value.map(comment => {
-            let time = formatDistanceToNow(comment.createdAt.toDate())
-            return { ...comment, createdAt: time }
+            let newFormat = Number(comment.createdAt.toDate())
+            let newTime = formatDistance(newFormat, date, {locale: ru})
+
+            return { ...comment, createdAt: newTime}
           })
         }
       })
