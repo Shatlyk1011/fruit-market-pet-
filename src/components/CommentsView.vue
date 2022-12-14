@@ -1,9 +1,9 @@
 <template>
-  <div class="w-1/2 relative" v-for="comment in products" :key="comment">
+  <div class="w-1/2 relative" v-for="comment in formatDate" :key="comment">
     <div>
       <div class="text-base font-medium">{{comment.author}}</div>
       <div class="text-sm">{{comment.title}}</div>
-      <div class="text-[10px] text-slate-500">Создано:{{comment.createdAt}}</div>
+      <div class="text-xs text-slate-500">{{comment.createdAt}} назад</div>
     </div>
     <div class="flex flex-col gap-1 items-start absolute bottom-0 right-6">
       <div class="relative">
@@ -19,6 +19,8 @@
 
 <script>
 import getCollection from "@/composables/getCollection";
+import { computed } from "vue";
+import { formatDistanceToNow } from "date-fns";
 import { projectFirestore } from "../firebase/config";
   export default {
     name: 'CommentsView',
@@ -26,13 +28,22 @@ import { projectFirestore } from "../firebase/config";
     props: ['id',],
 
     setup(props) {
-      const {products} = getCollection('comments', ['docId', '==', props.id])
+      const {products: comments} = getCollection('comments', ['docId', '==', props.id])
+
+      const formatDate = computed(() => {
+        if(comments.value) {
+          return comments.value.map(comment => {
+            let time = formatDistanceToNow(comment.createdAt.toDate())
+            return { ...comment, createdAt: time }
+          })
+        }
+      })
 
       const handleDelete = async (id) => {
         await projectFirestore.collection('comments').doc(id).delete()
       }
 
-      return {products, handleDelete}
+      return {comments, handleDelete, formatDate}
     }
   }
 </script>

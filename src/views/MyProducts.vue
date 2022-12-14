@@ -4,7 +4,7 @@
     <div v-if="products" class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
       <Product v-for="product in products" :key="product.id" :product="product" />
     </div>
-    <div v-else class="flex flex-col">
+    <div v-else class="flex flex-col w-full h-full">
       <div class="mb-2 ">
         Вы еще ничего не продаете...
       </div>
@@ -27,6 +27,7 @@ import getUser from '@/composables/getUser';
     setup() {
       const { user } = getUser()
       const { error, products } = getCollection('products', ['userUid', '==', user.value.uid])
+      const heh = products
       console.log(products)
 
 

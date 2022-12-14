@@ -9,7 +9,6 @@
 import Products from '@/components/Products.vue';
 import getCollection from '@/composables/getCollection';
 import Spinner from '@/components/Spinner.vue'
-import {ref, computed} from 'vue'
 
 export default {
   name: 'HomeView',
