@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <form @submit.prevent="handleCreate" class="p-8 bg-slate-100 rounded flex flex-col gap-6 tracking-wide md:w-1/2 mx-auto min-w-[400px] md:min-w-[500px]">
-      <h2 class=" inline-block  text-xl px-4 py-2 ring-2 ring-slate-300 rounded bg-slate-200 text-black/80 mx-auto mb-3">Описание вашего товара</h2>
+  <div class="px-2">
+    <form @submit.prevent="handleCreate" class="p-2 sm:p-4 md:p-8 sm:max-w-[500px] mx-auto bg-slate-100 flex flex-col gap-4 md:gap-6 tracking-wide ">
+      <h2 class="inline-block text-lg md:text-xl px-4 py-2 ring-1 shadow-md ring-slate-300 rounded bg-slate-200 text-black/80 mx-auto mb-3">Описание вашего товара</h2>
       <div class="flex flex-col gap-1">
         <label for="name">Название</label>
         <input v-model="title" class="placeholder:font-thin placeholder:text-sm placeholder:tracking-wide px-2 py-1 focus:outline-none caret-slate-300 text-sm tracking-tight focus:ring-2 ring-slate-400" type="text" id="name" placeholder="Samsung galaxy S10...">
@@ -12,7 +12,7 @@
       </div>
       <div class="flex gap-4">
         <div class="flex flex-col w-1/2 gap-1">
-          <label for="category">Категория товара</label>
+          <label for="category" class="text-sm sm:text-base">Категория товара</label>
           <select v-model="category" class="px-2 py-1 focus:outline-none w-full text-sm font-sans2 tracking-wider focus:ring-2 ring-slate-400">
             <!-- <option value="none" class="" >Категория товара</option> -->
             <option value="phone">телефон</option>
@@ -21,7 +21,7 @@
           </select>
         </div>
         <div class="flex flex-col gap-1">
-          <label for="price">Цена в рублях</label>
+          <label for="price" class="text-sm sm:text-base">Цена в рублях</label>
           <input v-model="price" class="px-2 py-1 focus:outline-none text-sm font-sans2 tracking-wider caret-slate-400 focus:ring-2 ring-slate-400" type="number" id="price">
         </div>
       </div>

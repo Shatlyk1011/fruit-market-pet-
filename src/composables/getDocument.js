@@ -7,20 +7,14 @@ const getDocument = (collection, id) => {
 
   let documentRef = projectFirestore.collection(collection).doc(id);
 
-  const unsub = documentRef.onSnapshot(
-    (doc) => {
-      if (doc.data()) {
-        document.value = { ...doc.data(), id: doc.id };
-        error.value = null;
-      } else {
-        error.value = "That document does not exist";
-      }
-    },
-    (err) => {
-      console.log(err.message);
-      error.value = "could not fetch the document";
+  const unsub = documentRef.onSnapshot((doc) => {
+    if (doc.data()) {
+      document.value = { ...doc.data(), id: doc.id };
+      error.value = null;
+    } else {
+      error.value = "Этот документ более не существует";
     }
-  );
+  });
 
   watchEffect((onInvalidate) => {
     onInvalidate(() => unsub());

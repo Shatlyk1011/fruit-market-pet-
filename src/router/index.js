@@ -49,7 +49,6 @@ const routes = [
     name: "MyProducts",
     component: MyProducts,
     beforeEnter: requireAuth,
-    props: true,
   },
 ];
 

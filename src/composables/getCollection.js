@@ -10,17 +10,6 @@ const getCollection = (collection, query) => {
     .collection(collection)
     .orderBy("createdAt", "desc");
 
-  //for filters
-  const getColl = collectionRef.get().then((doc) => {
-    let res = [];
-    doc.forEach((doc) => {
-      res.push({ ...doc.data() });
-    });
-    return res;
-    // jobFilter.value = res;
-  });
-  //
-
   if (query) {
     collectionRef = collectionRef.where(...query);
   }
@@ -46,7 +35,7 @@ const getCollection = (collection, query) => {
     onInvalidate(() => unsub());
   });
 
-  return { error, products, getColl };
+  return { error, products };
 };
 
 export default getCollection;

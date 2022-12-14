@@ -1,33 +1,39 @@
 <template>
-  <div class="error container" v-if="error">{{error}}</div>
-  <div v-if="product" class="container flex flex-col md:flex-row px-6 py-6 bg-slate-300 rounded gap-10 w-2/3">
-    <div>
-      <img :src="product.imageUrl" class="max-w-[300px] mx-auto" alt="">
-    </div>
-    <div class="flex flex-col justify-between gap-6 w-full">
+  <div class="error px-6 py-6" v-if="error">{{error}}</div>
+  <div class= "w-full p-4  md:p-6 bg-slate-300 rounded ">
+    <div v-if="product" class="mx-auto flex flex-col md:flex-row gap-4 md:gap-8">
       <div>
-        <div class="text-2xl font-medium self-center mb-2 font-sans2">{{product.title}}</div>
-        <div class="text-sm trac line-clamp tracking-wider ">{{product.description}}</div>
+        <img :src="product.imageUrl" class="w-full" alt="">
       </div>
-      <div class="flex justify-between gap-2">
-        <div class="flex flex-col">
-          <div class="px-3 py-1 bg-green-700 text-white/90 font-bold self-start justify-self-center font-sans2 tracking-wider rounded-xl ">{{product.price}} &#8381;</div>
-          <div class="text-sm">Продавец: <span class="underline font-medium font-sans2 tracking-wide text-sm">{{product.userName}}</span> </div>
+      <div class="flex flex-col justify-between gap-2 ">
+        <div>
+          <div class="text-2xl font-medium self-center font-sans2">{{product.title}}</div>
+          <div class="text-sm trac line-clamp tracking-wider ">{{product.description}}</div>
         </div>
-        <div v-if="userProduct" class="mt-auto">
-          <div @click="handleDelete(product.filePath)" class="text-sm px-3 py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white rounded-xl cursor-pointer transition duration-200 active:scale-95 select-none self-end">Удалить</div>
+        <div class="flex justify-between gap-2">
+          <div class="flex flex-col">
+            <div class="px-3 py-1 bg-green-700 text-white/90 font-bold self-start justify-self-center font-sans2 tracking-wider rounded-xl ">{{product.price}} &#8381;</div>
+            <div class="text-sm">Продавец: <span class="underline font-medium font-sans2 tracking-wide text-sm">{{product.userName}}</span> </div>
+          </div>
+          <div v-if="userProduct" class="mt-auto">
+            <div @click="handleDelete" class="text-xs px-2 py-1 border bg-red-600 text-white hover:bg-transparent hover:text-red-600 hover:border-red-600 rounded-lg cursor-pointer transition duration-200 active:scale-95 select-none self-end">Удалить товар</div>
+          </div>
         </div>
       </div>
-
-    </div>    
+    </div>
+    <div class="bg-slate-200 mt-2 px-2 py-3 ">
+      <CommentsForm :id="id"/> 
+    </div>
   </div>
 </template>
 
 <script>
+import CommentsForm from '@/components/CommentsForm.vue'
 import getDocument from '@/composables/getDocument';
 import getUser from '@/composables/getUser';
 import useDocument from '@/composables/useDocument';
 import useStorage from '@/composables/useStorage'
+import getCollection from '@/composables/getCollection';
 import {computed} from 'vue'
 import {useRouter} from 'vue-router'
 
@@ -35,22 +41,32 @@ import {useRouter} from 'vue-router'
     name: 'ProductDescription',
     props: ['id'],
 
+    components: {CommentsForm},
+
     setup(props) {
       const {error, document: product} =  getDocument('products', props.id)
       const { deleteDoc } = useDocument('products', props.id)
-
+      const {products: comments} = getCollection('comments', ['docId', '==', props.id])
+      const {deleteImage} = useStorage()
       const {user} = getUser()
+      
+      
+      const router = useRouter()
+
       const userProduct = computed(() => {
         return product.value && user.value && user.value.uid == product.value.userUid
       })
 
-      const {deleteImage} = useStorage()
-
-      const router = useRouter()
-
-      const handleDelete = async (path) => {
-        await deleteImage(product.value.filePath)
-        await deleteDoc(path)
+      const handleDelete = async () => {
+        // await deleteImage(product.value.filePath)
+        // await deleteDoc()
+        for(let i = 0; i < comments.value.length; i++) {
+          let commId = comments.value[i].commentId
+          const { deleteDoc: deleteComments } = useDocument('comments', commId)
+          deleteComments()
+        console.log('loop', comments.value[i].commentId)
+      }
+        console.log('comments', comments.value)
         router.push({name: 'Home'})
       }
 

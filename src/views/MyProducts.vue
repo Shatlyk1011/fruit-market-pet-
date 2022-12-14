@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <h2 class=" mx-auto text-4xl font-medium font-sans2 mb-6">Мои товары</h2>
-    <div v-if="products" class="grid gap-4 md:gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
+  <div class="px-4">
+    <h2 class=" text-2xl sm:text-3xl md:text-4xl font-medium font-sans2 mb-4 md:mb-6">Мои товары</h2>
+    <div v-if="products" class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
       <Product v-for="product in products" :key="product.id" :product="product" />
     </div>
     <div v-else class="flex flex-col">

@@ -18,22 +18,9 @@ export default {
   },
 
   setup() {
-    const {error, products, getColl } = getCollection('products')
-    // console.log(getColl)
-    const filteredAuto = getColl.then((res) => {
-      res.filter(product => {
-        if(product.category == 'phone') {
-          console.log(product)
-          return
-        } else 
-        // console.log(product)
-        return
-        
-      })
-      // console.log(filteredAuto)
-    })
+    const {error, products} = getCollection('products')
 
-    return {error, products, filteredAuto}
+    return {error, products}
   }
 }
 </script>

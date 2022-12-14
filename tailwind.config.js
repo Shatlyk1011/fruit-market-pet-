@@ -5,14 +5,18 @@ module.exports = {
     extend: {
       container: {
         center: true,
-        padding: "2rem",
+        padding: "1rem",
       },
-      screens: {
-        sm: "480px",
+
+      gridTemplateColumns: {
+        comm: "80% 1fr",
       },
     },
     fontFamily: {
       sans2: ["Oswald", "sans-serif"],
+    },
+    screens: {
+      sm: "450px",
     },
   },
   plugins: [require("@tailwindcss/line-clamp")],

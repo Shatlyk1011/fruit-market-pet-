@@ -14,7 +14,7 @@ body {
 
 button,
 .btn {
-  @apply inline-block px-6 py-2 text-white bg-slate-500  hover:bg-slate-400 transition-all tracking-wide rounded;
+  @apply inline-block px-3 py-1 sm:px-4 sm:py-2 text-white bg-slate-500  hover:bg-slate-400 transition-all tracking-wide rounded;
 }
 
 button:disabled,
@@ -28,4 +28,8 @@ button:disabled,
 
 *::selection {
   @apply bg-slate-400 text-slate-800;
+}
+
+input:disabled {
+  cursor: disabled;
 }
