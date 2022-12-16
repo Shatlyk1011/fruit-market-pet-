@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/tw.css";
 
-import { projectAuth } from "./firebase/config";
+import { projectAuth } from "@/firebase/config";
 
 let app;
 projectAuth.onAuthStateChanged(() => {

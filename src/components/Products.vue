@@ -1,26 +1,19 @@
 <template>
   <div class="px-4">
-    <div class="mb-10 flex flex-col gap-4 items-start ">
-      <h2 class="self-start text-4xl font-medium ">Рынок <span class="font-sans2">NouName</span></h2>
-      <h3>Лучший онлайн рынок СНГ</h3>
+    <div class="mb-5 flex flex-col gap-2 items-start ">
+      <h2 class="self-start text-4xl font-medium ">Рынок <span class="font-serif font-medium text-zinc-700">NouName</span></h2>
+      <h3>Лучший онлайн рынок фруктов в СНГ</h3>
+      <h4 class="text-sm text-orange-400 font-serif font-bold">Пожалуйста, <router-link :to="{name: 'Login'}" class="font-bold border-b border-orange-500">войдите</router-link> что бы добавить свои фрукты!</h4>
     </div>
-    <input @input="computedProduct" type="text" v-model="search" class="border border-gray-500 mb-6">
-<!--     <div class="flex gap-3">
-      <div>
-        <label for="phone">phone</label>
-        <input id="phone" type="checkbox" v-model="phone">
-      </div>
-      <div>
-        <label for="auto">auto</label>
-        <input id="auto" type="checkbox" v-model="auto">
-      </div>
-      <div>
-        <label for="another">another</label>
-        <input id="another" type="checkbox" v-model="another">
-      </div>
-    </div> -->
+    <div class="flex flex-col md:flex-row gap-4 items-start">
+      <label for="search" class="text-sm font-semibold ">Поиск фруктов:</label>
+      <input id="search" @input="computedProduct" type="text" v-model="search" class=" focus:outline-none border-b border-zinc-600 focus:border-zinc-900 mb-5 bg-tra">
+    </div>
     <div class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
       <Product v-for="product in computedProduct" :key="product.id" :product="product" />
+      <div v-if="noSearchResults">
+        <div class="leading-8">По вашему запросу ничего не найдено... <br> <span @click="handleClick" class="text-medium  border border-zinc-600 px-2 py-1 mt-1 cursor-pointer">Попрубуйте еще раз</span> </div>
+      </div>
     </div>
   </div>
 </template>
@@ -36,40 +29,30 @@ import { ref, computed } from 'vue';
 
     setup(props) {
       const search = ref('')
-/*       const phone = ref(false)
-      const auto = ref(false)
-      const another = ref(false) */
+      const searchResult = ref(null)
+      const noSearchResults = computed(() => {
+        if(search.value.length === 0 || searchResult.value === true) {
+          return false
+        }else 
+        return true
+      })
       
       const computedProduct = computed(() => {
         if(search.value !== '') {
-          try {
-            return props.products.filter(product => product.title.includes(search.value))
-          } catch(err) {
-            console.log(err.message)
-          }
+          const searchValues =  props.products.filter(product => product.title.includes(search.value))
+          console.log('searchValues', searchValues)
+          return searchValues.length === 0 ? searchResult.value = false : searchValues
         } else {
           return props.products
         }
       })
 
-      return {search, computedProduct }
+      const handleClick = () => {
+        search.value = ''
+        noSearchResults.value = false
+      }
+
+      return {search, computedProduct, noSearchResults, handleClick }
     }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
-
-<!-- const computedCheckboxex = computed(() => {
-  if(phone.value) {
-    try{
-      return props.products.filter(product => product.category == 'phone')
-
-    } catch (err) {
-      console.log(err.message)
-    }
-  } else {
-    return props.products
-  }
-}) -->

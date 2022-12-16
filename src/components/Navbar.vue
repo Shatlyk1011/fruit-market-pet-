@@ -1,43 +1,44 @@
 <template>
-  <div class="bg-white  mb-6">
-    <nav class="p-2 sm:px-6 sm:min-w-full flex flex-col sm:flex-row items-start justify-between gap-2">
+  <div class="bg-zinc-300 mb-6" >
+    <nav ref="nav" class="max-w-[1200px] mx-auto p-2 sm:px-2 md:px-10 lg:p-4 lg:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="flex items-center gap-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M176,80h42.6a7.9,7.9,0,0,1,7.4,5l14,35" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></path><line x1="16" y1="144" x2="176" y2="144" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line><circle cx="180" cy="192" r="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></circle><circle cx="76" cy="192" r="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></circle><line x1="156" y1="192" x2="100" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line><path d="M52,192H24a8,8,0,0,1-8-8V72a8,8,0,0,1,8-8H176V168.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></path><path d="M176,120h64v64a8,8,0,0,1-8,8H204" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></path>
         </svg>
-        <router-link class="font-medium font-sans2" :to="{name: 'Home'}">NouName</router-link>
+        <router-link class="font-serif font-bold" :to="{name: 'Home'}">NouName</router-link>
       </div>
-    <div v-if="user" class="flex gap-2 sm:gap-4 items-center justify-between sm:justify-end w-full ">
-      <router-link class="text-xs active:scale-95 active:translate-y-[2px] transition-transform hover:shadow-inner" :to="{name: 'AddProduct'}">Создать товар</router-link>
-      <router-link class="text-xs active:scale-95 active:translate-y-[2px] transition-transform hover:shadow-inner" to="MyProducts">Мои товары</router-link>
-      <button @click="unAuth">Выйти</button>
-    </div>
-    <div v-else class="flex gap-4 ">
-      <router-link class="btn" :to="{name: 'Signup'}">Регистрация</router-link>
-      <router-link class="btn" :to="{name: 'Login'}">Войти</router-link>
-    </div>
-  </nav>
-</div>
+      <div>
+        <div v-if="user" :key="user" class="flex gap-2 sm:gap-4 items-center justify-between sm:justify-end w-full text-xs sm:text-sm md:text-base">
+          <router-link class="  active:scale-95 active:tranzinc-y-[2px] transition-transform hover:shadow-inner" :to="{name: 'AddProduct'}">Создать товар</router-link>
+          <router-link class=" sm:text active:scale-95 active:tranzinc-y-[2px] transition-transform hover:shadow-inner" :to="{name: 'MyProducts'}">Мои фрукты</router-link>
+          <button class="md:text-base" @click="unAuth">Выйти</button>
+        </div>
+        <div v-else class="flex gap-4 ">
+          <router-link class="btn" :to="{name: 'Signup'}">Регистрация</router-link>
+          <router-link class="btn" :to="{name: 'Login'}">Войти</router-link>
+        </div>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
-import getUser from '@/composables/getUser';
 import useLogout from '@/composables/useLogout';
 import {useRouter} from 'vue-router'
+import getUser  from '@/composables/getUser'
+
 
   export default {
     name: 'Navbar',
     
     setup() {
-      const {error, logout, isPending} = useLogout()
-      const {user} = getUser()
-
       const router = useRouter()
+      const { error, logout, isPending} = useLogout()
+      const { user } = getUser()
+
       const unAuth = async () => {
         await logout()
-        if(!error.value) {
-          router.push({name: 'Login'})
+        router.push({name: 'Login'})
         }
-      }
 
 
       return {error, user, unAuth}

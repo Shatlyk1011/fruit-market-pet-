@@ -7,17 +7,27 @@ module.exports = {
         center: true,
         padding: "1rem",
       },
-
+      colors: {
+        main: "#52b788",
+        mainD: "#40916c",
+        accentL: "#00b4d8",
+        accentD: "#023e8a",
+      },
       gridTemplateColumns: {
         comm: "80% 1fr",
       },
     },
+
     fontFamily: {
-      sans2: ["Oswald", "sans-serif"],
+      serif: ["Lora", "serif"],
     },
     screens: {
-      sm: "450px",
+      sm: "425px",
+      md: "600px",
+      lg: "900px",
+      xl: "1200px",
     },
   },
+
   plugins: [require("@tailwindcss/line-clamp")],
 };

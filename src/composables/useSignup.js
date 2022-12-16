@@ -9,10 +9,11 @@ const signup = async (email, password, name) => {
   isPending.value = true;
 
   try {
-    const res = await projectAuth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
+    const res = await projectAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((cred) => {
+        console.log(cred.user);
+      });
     await res.user.updateProfile({ displayName: name });
     error.value = null;
     isPending.value = false;
