@@ -4,7 +4,6 @@ import { projectFirestore } from "../firebase/config";
 const getCollection = (collection, query) => {
   const products = ref(null);
   const error = ref(null);
-  // const jobFilter = ref(null);
 
   let collectionRef = projectFirestore
     .collection(collection)
@@ -19,7 +18,6 @@ const getCollection = (collection, query) => {
       let results = [];
       snap.docs.forEach((doc) => {
         doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
-        // console.log("1doc", doc.data());
       });
       products.value = results;
       error.value = null;

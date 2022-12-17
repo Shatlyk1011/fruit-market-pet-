@@ -1,7 +1,7 @@
 <template>
   <div class="w-1/2 relative" v-for="comment in formatDate" :key="comment">
     <div>
-      <div class="text-base font-medium">{{comment.author}}</div>
+      <div class="text-base font-extrabold font-serif">{{comment.author}}</div>
       <div class="text-sm">{{comment.title}}</div>
       <div class="text-xs` text-zinc-500 text-xs">{{comment.createdAt}} назад</div>
     </div>
@@ -21,6 +21,7 @@
 import getCollection from "@/composables/getCollection";
 import { computed } from "vue";
 import { projectFirestore } from "../firebase/config";
+import getUser from '@/composables/getUser';
 
 import { formatDistance } from "date-fns";
 import {ru} from 'date-fns/locale'
@@ -31,6 +32,7 @@ import {ru} from 'date-fns/locale'
 
     setup(props) {
       const {products: comments} = getCollection('comments', ['docId', '==', props.id])
+      const { user } = getUser()
 
       const date = new Date()
       const formatDate = computed(() => {
@@ -48,7 +50,7 @@ import {ru} from 'date-fns/locale'
         await projectFirestore.collection('comments').doc(id).delete()
       }
 
-      return {comments, handleDelete, formatDate}
+      return {comments, handleDelete, formatDate, user}
     }
   }
 </script>

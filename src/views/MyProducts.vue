@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
       <Product v-for="product in products" :key="product.id" :product="product" />
     </div>
-    <div class="flex flex-col w-full h-full">
+    <div v-if="box" class="flex flex-col w-full h-full">
       <div class="mb-2 text-sm font-semibold">
         Вы еще ничего не продаете...
       </div>
@@ -20,6 +20,7 @@
 import Product from '@/components/Product.vue';
 import getCollection from '@/composables/getCollection';
 import getUser from '@/composables/getUser';
+import { computed } from '@vue/reactivity';
   export default {
     name: 'MyProducts',
     components: {Product},
@@ -28,9 +29,12 @@ import getUser from '@/composables/getUser';
       const { user } = getUser()
       const { error, products } = getCollection('products', ['userUid', '==', user.value.uid])
 
+      const box = computed(() => {
+        console.log(products.value)
+        return products.value
+      })
 
-
-      return { error, products, user }
+      return { error, products, user, box }
     }
   }
 </script>

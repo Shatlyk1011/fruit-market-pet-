@@ -3,7 +3,7 @@
     <div class="mb-5 flex flex-col gap-2 items-start ">
       <h2 class="self-start text-4xl font-medium ">Рынок <span class="font-serif font-medium text-zinc-700">NouName</span></h2>
       <h3>Лучший онлайн рынок фруктов в СНГ</h3>
-      <h4 class="text-sm text-orange-400 font-serif font-bold">Пожалуйста, <router-link :to="{name: 'Login'}" class="font-bold border-b border-orange-500">войдите</router-link> что бы добавить свои фрукты!</h4>
+      <h4 v-if="!user" class="text-sm text-orange-400 font-serif font-bold">Пожалуйста, <router-link :to="{name: 'Login'}" class="font-bold border-b border-orange-500">войдите</router-link> что бы добавить свои фрукты!</h4>
     </div>
     <div class="flex flex-col md:flex-row gap-4 items-start">
       <label for="search" class="text-sm font-semibold ">Поиск фруктов:</label>
@@ -21,6 +21,7 @@
 <script>
 import Product from '@/components/Product.vue'
 import { ref, computed } from 'vue';
+import getUser from '@/composables/getUser'
 
   export default {
     name: 'Products',
@@ -28,6 +29,7 @@ import { ref, computed } from 'vue';
     props: ['products'],
 
     setup(props) {
+      const {user} = getUser()
       const search = ref('')
       const searchResult = ref(null)
       const noSearchResults = computed(() => {
@@ -52,7 +54,7 @@ import { ref, computed } from 'vue';
         noSearchResults.value = false
       }
 
-      return {search, computedProduct, noSearchResults, handleClick }
+      return {search, computedProduct, noSearchResults, handleClick, user }
     }
 }
 </script>

@@ -37,3 +37,15 @@ button:disabled,
 input:disabled {
   cursor: disabled;
 }
+
+/* ROUTER TRANSITIONS */
+
+.route-enter-from,
+.route-leave-to {
+  @apply opacity-0 translate-x-24;
+}
+
+.route-enter-active,
+.route-leave-active {
+  @apply transition-all duration-300 ease-out;
+}
