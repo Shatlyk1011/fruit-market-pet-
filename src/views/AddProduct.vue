@@ -31,9 +31,13 @@
         </label>
         <div v-if="image" class="text-xs">{{image.name}}</div>
       </div>
-          <input @change="changeImage" class="text-xs hidden" id="image" type="file">
-        <div v-if="imageFormatError" class="text-sm text-red-400 serif tracking-wide">{{imageFormatError}}</div>
-        <div v-if="unchoosenError" class="text-sm text-red-400 serif tracking-wide">{{unchoosenError}}</div>
+        <input @change="changeImage" class="text-xs hidden" id="image" type="file">
+        <transition name="imgError">
+          <div v-if="imageFormatError" class="text-sm mt-2 text-orange-400 serif tracking-wide">{{imageFormatError}}</div>
+        </transition>
+        <transition name="imgError">
+          <div v-if="unchoosenError" class="text-sm mt-2 text-orange-400 serif tracking-wide">{{unchoosenError}}</div>
+        </transition>
       </div>
       <button v-if="!isPending" class="self-start px-4 py-2">Создать товар</button>
       <button v-if="isPending" class="self-start px-4 py-2" disabled>Создать товар</button>
@@ -101,7 +105,6 @@ import router from '@/router';
             router.push({name: 'Home'})
           }
         } else {
-          console.log('choose error')
           unchoosenError.value = 'Пожалуйста, выберите фото' 
           setTimeout(() => {
             unchoosenError.value = null
@@ -115,6 +118,53 @@ import router from '@/router';
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
+/* TRANSITIONS */
+
+@keyframes wobble {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  30% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  50% {
+    transform: translateX(-6px);
+  }
+  60% {
+    transform: translateX(6px);
+  }
+  70% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+  90% {
+    transform: translateX(-6px);
+  }
+  100% {
+    transform: translateX(6px);
+  }
+}
+.imgError-enter-from {
+  opacity: 0;
+  transform: translateY(-2rem);
+}
+
+.imgError-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.imgError-enter-active {
+  animation: wobble 0.5s ease;
+}
 
 </style>

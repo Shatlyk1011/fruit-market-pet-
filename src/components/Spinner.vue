@@ -1,26 +1,13 @@
 <template>
-    <div class="spin"></div>
+	<Teleport to="body">
+		<!-- <div class="w-full h-screen"> -->
+			<div class="absolute top-1/3 left-1/2 -translate-x-1/2 ">
+				<div class="w-16 h-16 border-2 rounded-full solid transparent border-t-zinc-700 animate-rotate"></div>
+			</div>
+		<!-- </div> -->
+	</Teleport>
 </template>
 
 <script>
 export default {};
 </script>
-
-<style>
-.spin {
-    display: block;
-    width: 40px;
-    height: 40px;
-    margin: 30px auto;
-    border: 3px solid transparent;
-    border-radius: 50%;
-    border-top-color: #ff8800;
-    animation: spin 0.7s ease infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotateZ(360deg);
-    }
-}
-</style>

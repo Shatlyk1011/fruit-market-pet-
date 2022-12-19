@@ -1,9 +1,11 @@
 <template>
   <Navbar />
   <div class="max-w-[1200px] mx-auto">
-    <router-view v-slot="{Component}">
+    <router-view v-slot="{Component, route}">
       <transition name="route" mode="out-in">
-        <component :is="Component"/>
+        <div :key="route.name">
+          <component :is="Component"/>
+        </div>
       </transition>
     </router-view>
   </div>
@@ -19,4 +21,5 @@ export default {
 </script>
 
 <style>
+
 </style>

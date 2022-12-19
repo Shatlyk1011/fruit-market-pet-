@@ -5,6 +5,7 @@ import Login from "../views/auth/Login.vue";
 import AddProduct from "../views/AddProduct.vue";
 import ProductDescription from "../views/ProductDescription.vue";
 import MyProducts from "../views/MyProducts.vue";
+import NotFound from "../views/NotFound.vue";
 
 import { projectAuth } from "@/firebase/config";
 const requireAuth = (to, from, next) => {
@@ -49,6 +50,11 @@ const routes = [
     name: "MyProducts",
     component: MyProducts,
     beforeEnter: requireAuth,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 
