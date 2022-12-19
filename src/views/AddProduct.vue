@@ -71,6 +71,7 @@ import router from '@/router';
       const isPending = ref(false)
       
       const imageTypes = ['image/png', 'image/jpeg']
+      
       const changeImage = (e) => {
         let selected = e.target.files[0]
         if(selected && imageTypes.includes(selected.type)) {

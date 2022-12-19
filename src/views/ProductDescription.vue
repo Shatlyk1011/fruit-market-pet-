@@ -1,5 +1,4 @@
 <template>
-  <div class="error px-6 py-6" v-if="error">{{error}}</div>
   <div class="px-2 md:px-4">
     <div v-if="product" class= "w-full p-4  md:p-6 bg-white ">
       <div  class="mx-auto flex flex-col md:flex-row gap-4 md:gap-8">
@@ -17,8 +16,9 @@
               <div class="text-sm">Продавец: <span class="underline font-medium serif tracking-wide text-sm">{{product.userName}}</span> </div>
             </div>
             <div v-if="userProduct" class="mt-auto flex flex-col gap-1 items-center">
-              <h5 class="text-xs text-zinc-400 font-bold">Этот товар ваш</h5>
-              <div @click="handleDelete" class="text-xs px-2 py-1 border border-red-400  text-red-400 hover:bg-transparent hover:text-red-600 hover:border-red-600 rounded-full cursor-pointer transition duration-200 active:scale-95 select-none self-end">Удалить товар</div>
+              <h5 class="text-xs text-zinc-400 font-bold">Это ваш товар</h5>
+              <div @click="handleDelete" v-if="!isPending" class="text-xs px-2 py-1 border border-red-400  text-red-400 hover:bg-transparent hover:text-red-600 hover:border-red-600 rounded-full cursor-pointer transition duration-200 active:scale-95 select-none self-end">Удалить товар</div>
+              <div v-if="isPending" class="text-xs px-2 py-1 border border-transparent  text-zinc-400 cursor-not-allowed bg-zinc-100 rounded-full transition duration-200 active:scale-95 select-none self-end" disabled>Удалить товар</div>
             </div>
           </div>
         </div>
@@ -31,6 +31,7 @@
       <Spinner/>
     </div>
   </div>
+  <div class="error px-6 py-6" v-if="error">{{error}}</div>
 </template>
 
 <script>
@@ -41,7 +42,7 @@ import useDocument from '@/composables/useDocument';
 import useStorage from '@/composables/useStorage'
 import getCollection from '@/composables/getCollection';
 import Spinner from '@/components/Spinner.vue'
-import {computed} from 'vue'
+import {ref, computed} from 'vue'
 import {useRouter} from 'vue-router'
 
   export default {
@@ -56,6 +57,8 @@ import {useRouter} from 'vue-router'
       const {products: comments} = getCollection('comments', ['docId', '==', props.id])
       const {deleteImage} = useStorage()
       const {user} = getUser()
+      const isPending = ref(null)
+      
       
       
       const router = useRouter()
@@ -65,19 +68,19 @@ import {useRouter} from 'vue-router'
       })
 
       const handleDelete = async () => {
+        isPending.value = true
         await deleteImage(product.value.filePath)
         await deleteDoc()
         for(let i = 0; i < comments.value.length; i++) {
           let commId = comments.value[i].commentId
           const { deleteDoc: deleteComments } = useDocument('comments', commId)
           deleteComments()
-        console.log('loop', comments.value[i].commentId)
-      }
-        console.log('comments', comments.value)
+        }
+        isPending.value = false
         router.push({name: 'Home'})
       }
 
-      return { error, product, userProduct, handleDelete }
+      return { error, product, userProduct, handleDelete, isPending }
     }
     
   }

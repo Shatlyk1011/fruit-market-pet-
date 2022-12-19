@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import useDocument from '@/composables/useDocument'
   export default {
     name: 'Product',
     props: ['product'],
@@ -31,9 +30,8 @@ import useDocument from '@/composables/useDocument'
       const showImg = () => {
         window.open(props.product.imageUrl)
       } 
-      const {error, isPending} = useDocument('products', props.product.id)
 
-      return {showImg, error, isPending}
+      return {showImg}
     }
   }
 </script>

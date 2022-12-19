@@ -9,11 +9,12 @@
       <label for="search" class="text-sm font-semibold ">Поиск фруктов:</label>
       <input id="search" @input="computedProduct" type="text" v-model="search" class=" focus:outline-none border-b border-zinc-600 focus:border-zinc-900 mb-5 bg-transparent ">
     </div>
-    <div class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
-      <Product  v-for="product in computedProduct" :key="product.id" :product="product" />
-      <div v-if="noSearchResult">
-        <div class="leading-8">По вашему запросу ничего не найдено... <br> <span @click="handleClick" class="text-medium  border border-zinc-600 px-2 py-1 mt-1 cursor-pointer">Попрубуйте еще раз</span> </div>
-      </div>
+    <transition-group tag="div" @before-enter="beforeEnter" @enter="enter" class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
+      <Product  v-for="(product, index) in computedProduct" :key="product.id" :product="product" :data-index="index"/>
+    </transition-group>
+    <div class="flex flex-col gap-2" v-if="noSearchResult">
+      <div class="">По вашему запросу ничего не найдено... </div>
+      <div @click="handleClick" class="text-medium self-start border border-zinc-600 hover:border-zinc-900 hover:text-zinc-900 px-2 py-0.5 cursor-pointer">Попрубуйте еще раз</div>
     </div>
   </div>
 </template>
@@ -22,6 +23,7 @@
 import Product from '@/components/Product.vue'
 import { ref, computed } from 'vue';
 import getUser from '@/composables/getUser'
+import gsap from 'gsap'
 
   export default {
     name: 'Products',
@@ -37,7 +39,6 @@ import getUser from '@/composables/getUser'
       const computedProduct = computed(() => {
         if(search.value !== '') {
           const searchValues =  props.products.filter(product => product.title.includes(search.value))
-          console.log('searchValues', searchValues)
           return searchValues.length === 0 ? noSearchResult.value = true : searchValues
         } else {
           return props.products
@@ -49,7 +50,22 @@ import getUser from '@/composables/getUser'
         noSearchResult.value = false
       }
 
-      return {search, computedProduct, noSearchResult, handleClick, user }
+      const beforeEnter = (el) => {
+      el.style.opacity = 0
+      el.style.transform = 'translateX(-100px)'
+    }
+
+    const enter = (el, done) => {
+      gsap.to(el, {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        onComplete: done,
+        delay: el.dataset.index * .2
+      })
+    }
+
+      return {search, computedProduct, noSearchResult, handleClick, user, beforeEnter, enter }
     }
 }
 </script>

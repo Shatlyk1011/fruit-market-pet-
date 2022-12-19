@@ -5,7 +5,7 @@
       <input v-model="password" type="password" placeholder="Пароль" class="px-2 py-2 placeholder:text-xs md:placeholder:text-sm  tracking-wide font-medium focus:outline-none required border-b-2 border-transparent focus:valid:border-zinc-500 focus:invalid:border-red-400 caret-zinc-500 " minlength="4"  autocomplete="on">
       <div class="error">{{error}}</div>
       <button v-if="!isPending" class="self-start" >Войти</button>
-      <button v-if="isPending"  class="self-start" disabled>Войти</button>
+      <button v-if="isPending" class="self-start" disabled>Войти</button>
     </form>
   </div>
 </template>

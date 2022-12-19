@@ -23,7 +23,7 @@ button,
 
 button:disabled,
 .btn:disabled {
-  @apply opacity-60 bg-zinc-200 text-zinc-500 cursor-not-allowed;
+  @apply opacity-60 bg-zinc-200 text-zinc-500 cursor-not-allowed shadow-none;
 }
 
 .error {

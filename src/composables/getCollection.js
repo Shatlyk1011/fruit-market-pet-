@@ -23,9 +23,8 @@ const getCollection = (collection, query) => {
       error.value = null;
     },
     (err) => {
-      console.log(err.message);
       products.value = null;
-      error.value = "could not fetch the data";
+      error.value = "Что то пошло не так...";
     }
   );
 
