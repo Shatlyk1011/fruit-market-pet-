@@ -15,7 +15,7 @@
               <div class="px-2 py-0.5 md:px-3 md:py-1.5 text-xs sm:text-sm bg-main text-white/90 font-medium self-start justify-self-center serif tracking-wider rounded"><span class="font-normal">Цена за кг: </span> {{product.price}} &#8381;</div>
               <div class="text-sm">Продавец: <span class="underline font-medium serif tracking-wide text-sm">{{product.userName}}</span> </div>
             </div>
-            <div v-if="userProduct" class="mt-auto flex flex-col gap-1 items-center">
+            <div v-if="true" class="mt-auto flex flex-col gap-1 items-center">
               <h5 class="text-xs text-zinc-400 font-bold">Это ваш товар</h5>
               <div @click="handleDelete" v-if="!isPending" class="text-xs px-2 py-1 border border-red-400  text-red-400 hover:bg-transparent hover:text-red-600 hover:border-red-600 rounded-full cursor-pointer transition duration-200 active:scale-95 select-none self-end">Удалить товар</div>
               <div v-if="isPending" class="text-xs px-2 py-1 border border-transparent  text-zinc-400 cursor-not-allowed bg-zinc-100 rounded-full transition duration-200 active:scale-95 select-none self-end" disabled>Удалить товар</div>
