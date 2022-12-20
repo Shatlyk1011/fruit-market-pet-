@@ -11,7 +11,7 @@ const signup = async (email, password, name) => {
   try {
     const res = await projectAuth
       .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {});
+      console.log('res', res.user)
     await res.user.updateProfile({ displayName: name });
     error.value = null;
     isPending.value = false;
