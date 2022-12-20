@@ -5,8 +5,10 @@ service cloud.firestore {
       allow create, delete: if request.auth != null;
       allow read: if true;
     }
+  }
+  match /databases/{database}/documents {
     match /comments/{userId} {
-      allow read: if true;
+      allow read, update: if true;
       allow create, delete: if request.auth != null;
     }
   }
