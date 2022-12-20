@@ -9,7 +9,7 @@
       <h4 v-if="!user" class="text-sm text-orange-400 font-serif font-bold">Пожалуйста, <router-link :to="{name: 'Login'}" class="font-bold border-b border-orange-500">войдите</router-link> что бы добавить свои фрукты!</h4>
     </div>
     <div class="flex flex-col md:flex-row gap-4 items-start">
-      <label for="search" class="text-sm font-semibold ">Поиск фруктов:</label>
+      <label for="search" class="text-sm font-semibold">Поиск фруктов:</label>
       <input id="search" @input="computedProduct" type="text" v-model="search" class=" focus:outline-none border-b border-zinc-600 focus:border-zinc-900 mb-5 bg-transparent ">
     </div>
     <transition-group tag="div" @before-enter="beforeEnter" @enter="enter" class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
@@ -41,7 +41,7 @@ import gsap from 'gsap'
       
       const computedProduct = computed(() => {
         if(search.value !== '') {
-          const searchValues =  props.products.filter(product => product.title.includes(search.value))
+          const searchValues =  props.products.filter(product => product.title.toLowerCase().includes(search.value.toLowerCase()))
           return searchValues.length === 0 ? noSearchResult.value = true : searchValues
         } else {
           return props.products
