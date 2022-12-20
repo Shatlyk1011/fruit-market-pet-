@@ -4,7 +4,7 @@
       <div v-if="user">
         <p class="text-gray-500 text-base md:text-xl">Привет, <span class="font-serif">{{ user.displayName }}</span></p>
       </div>
-      <h2 class="self-start text-2xl md:text-4xl font-medium "> Добро пожаловать на рынок <span class="font-serif font-medium text-zinc-700">NouName</span></h2>
+      <h2 class="self-start text-2xl md:text-4xl font-medium "> Добро пожаловать на <span class="font-serif font-medium text-zinc-700">СНГ рынок</span></h2>
       <h3>Лучший онлайн рынок фруктов в СНГ</h3>
       <h4 v-if="!user" class="text-sm text-orange-400 font-serif font-bold">Пожалуйста, <router-link :to="{name: 'Login'}" class="font-bold border-b border-orange-500">войдите</router-link> что бы добавить свои фрукты!</h4>
     </div>
