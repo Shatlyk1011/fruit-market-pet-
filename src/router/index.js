@@ -2,10 +2,12 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Signup from "../views/auth/Signup.vue";
 import Login from "../views/auth/Login.vue";
-import AddProduct from "../views/AddProduct.vue";
-import ProductDescription from "../views/ProductDescription.vue";
+const AddProduct = () => import('@/views/AddProduct.vue')
+const ProductDescription = () => import('@/views/ProductDescription.vue')
 import MyProducts from "../views/MyProducts.vue";
-import NotFound from "../views/NotFound.vue";
+const NotFound = () => import('@/views/NotFound.vue')
+
+
 
 import { projectAuth } from "@/firebase/config";
 const requireAuth = (to, from, next) => {
