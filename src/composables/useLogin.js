@@ -14,7 +14,6 @@ const login = async (email, password) => {
     isPending.value = false;
     return res;
   } catch (err) {
-    console.log(err.message);
     error.value = `Ошибка: ${err.message}`;
     isPending.value = false;
   }

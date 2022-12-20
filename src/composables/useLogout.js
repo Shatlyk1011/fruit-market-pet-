@@ -14,8 +14,7 @@ const logout = async () => {
     await projectAuth.signOut();
     isPending.value = false;
   } catch (err) {
-    console.log(err.message);
-    error.value = err.message;
+    error.value = `Ошибка: ${err.message}`;
     isPending.value = false;
   }
 };

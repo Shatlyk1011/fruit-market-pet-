@@ -17,7 +17,6 @@ const useStorage = () => {
       const res = await storageRef.put(image);
       url.value = await res.ref.getDownloadURL();
     } catch (err) {
-      console.log(err.message);
       error.value = err.message;
     }
   };
@@ -28,8 +27,7 @@ const useStorage = () => {
     try {
       await storageRef.delete();
     } catch (err) {
-      console.log(err.message);
-      error.value = err.message;
+      error.value = `Ошибка: ${err.message}`;
     }
   };
 

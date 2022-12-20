@@ -29,7 +29,6 @@ import {useRouter} from 'vue-router'
       const handleSubmit = async () => {
         await signup(email.value, password.value, userName.value)
         if(!error.value) {
-          console.log('Registered')
           router.push({name: 'Home'})
         }
       }

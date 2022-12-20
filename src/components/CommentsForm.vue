@@ -45,7 +45,6 @@ import CommentsView from './CommentsView.vue';
             commentId.value = doc.id
             projectFirestore.collection('comments').doc(commentId.value).update({commentId: commentId.value})
           });
-          console.log(commentId.value)
           if(!error.value) {
             title.value = ''
           }

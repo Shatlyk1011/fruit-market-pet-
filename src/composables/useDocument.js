@@ -16,7 +16,6 @@ const useDocument = (collection, id) => {
       isPending.value = false;
       return res;
     } catch (err) {
-      console.log(err.message);
       isPending.value = false;
       error.value = "Could not delete the document";
     }
@@ -31,9 +30,8 @@ const useDocument = (collection, id) => {
       isPending.value = false;
       return res;
     } catch (err) {
-      console.log(err.message);
       isPending.value = false;
-      error.value = "Could not update the document";
+      error.value = `Ошибка: ${err.message}`;
     }
   };
 

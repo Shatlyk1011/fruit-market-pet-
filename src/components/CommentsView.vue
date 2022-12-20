@@ -6,7 +6,7 @@
           <div class="text-base font-extrabold font-serif">{{comment.author}}</div>
           <div class="text-sm">{{comment.title}}</div>
           <div class="text-xs` text-zinc-500 text-xs">{{comment.createdAt}} назад</div>
-          <div v-if="false" @click="handleDelete(comment.commentId)" class="text-xs text-red-400 hover:text-red-500 transition-all hover:border-b-red-500 cursor-pointer active:scale-95 select-none absolute right-0 bottom-0">удалить</div>
+          <div v-if="comment.author == currentUser" @click="handleDelete(comment.commentId)" class="text-xs text-red-400 hover:text-red-500 transition-all hover:border-b-red-500 cursor-pointer active:scale-95 select-none absolute right-0 bottom-0">удалить</div>
         </li>
       </transition-group>
     </transition>
@@ -16,7 +16,7 @@
 
 <script>
 import getCollection from "@/composables/getCollection";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { projectFirestore } from "../firebase/config";
 import getUser from '@/composables/getUser';
 
@@ -31,7 +31,11 @@ import {ru} from 'date-fns/locale'
       const {products: comments, error} = getCollection('comments', ['docId', '==', props.id])
       const { user } = getUser()
 
-      const currentUser = user.value.displayName
+      const currentUser = computed(() => {
+        if(user.value) {
+          return user.value.displayName
+        }
+      })
 
       const date = new Date()
       const formatDate = computed(() => {
@@ -45,7 +49,6 @@ import {ru} from 'date-fns/locale'
       })
 
       const handleDelete = async (id) => {
-        console.log('id', id)
         await projectFirestore.collection('comments').doc(id).delete()
       }
 

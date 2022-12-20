@@ -7,7 +7,17 @@
     <transition-group v-if="products" tag="div" @before-enter="beforeEnter" @enter="enter" class="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" >
       <Product v-for="(product, index) in products" :key="product.id" :product="product" :data-index="index"/>
     </transition-group>
+<!--     <div v-else-if="!products" class="flex flex-col w-full h-full">
+      <div class="mb-2 text-sm font-semibold">
+        Вы еще ничего не продаете...
+      </div>
+      <div class="flex gap-4">
+        <div><router-link :to="{name: 'Home'}" class="btn text-xs py-1">Посмотреть все товары</router-link></div>
+        <div><router-link :to="{name: 'AddProduct'}" class="btn text-xs py-1">Добавить фрукт</router-link></div>
+      </div>
+    </div> -->
     <Spinner v-else/>
+
     <div v-if="error" class="error">{{ error }}</div>
   </div>  
 </template>
@@ -19,6 +29,7 @@ import getUser from '@/composables/getUser';
 import Spinner from '@/components/Spinner.vue'
 import gsap from 'gsap'
 
+
   export default {
     name: 'MyProducts',
     components: {Product, Spinner},
@@ -26,7 +37,7 @@ import gsap from 'gsap'
     setup() {
       const { user } = getUser()
       const { error, products } = getCollection('products', ['userUid', '==', user.value.uid])
-
+      
       const beforeEnter = (el) => {
       el.style.opacity = 0
       el.style.transform = 'translateX(-100px)'

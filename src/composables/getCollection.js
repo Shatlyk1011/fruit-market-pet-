@@ -24,7 +24,7 @@ const getCollection = (collection, query) => {
     },
     (err) => {
       products.value = null;
-      error.value = "Что то пошло не так...";
+      error.value = `Ошибка: ${err.message}`;
     }
   );
 

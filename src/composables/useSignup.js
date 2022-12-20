@@ -11,16 +11,13 @@ const signup = async (email, password, name) => {
   try {
     const res = await projectAuth
       .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {
-        console.log(cred.user);
-      });
+      .then((cred) => {});
     await res.user.updateProfile({ displayName: name });
     error.value = null;
     isPending.value = false;
 
     return res;
   } catch (err) {
-    console.log(err.message);
     error.value = `Ошибка: ${err.message}`;
     isPending.value = false;
   }

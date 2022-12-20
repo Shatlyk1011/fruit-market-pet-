@@ -1,5 +1,11 @@
 <template>
-  <div class="text-center">
+  <div class="display flex justify-center relative">
+    <div class="absolute flex flex-col left-4 -bottom-32">
+      <div class="font-bold text-sm">Воспользуйтесь для тестирование: </div>
+      <div class="text-sm font-serif">login: shatlyk@mail.ru <br> password: test123</div>
+      <br>
+      <div class="text-sm font-serif">login: igor@mail.ru <br> password: test123</div>
+    </div>
     <form @submit.prevent="handleSubmit" class="inline-flex flex-col gap-4 w-full sm:w-2/3 md:w-[400px] p-6 bg-white rounded text-sm">
       <input v-model="email" type="email" placeholder="Email" class="px-2 py-2 placeholder:text-xs md:placeholder:text-sm  tracking-wide font-medium focus:outline-none required border-b-2 border-transparent focus:valid:border-zinc-500 focus:invalid:border-red-400 caret-zinc-500">
       <input v-model="password" type="password" placeholder="Пароль" class="px-2 py-2 placeholder:text-xs md:placeholder:text-sm  tracking-wide font-medium focus:outline-none required border-b-2 border-transparent focus:valid:border-zinc-500 focus:invalid:border-red-400 caret-zinc-500 " minlength="4"  autocomplete="on">

@@ -15,8 +15,7 @@ const useCollection = (collection) => {
       isPending.value = false;
       return res;
     } catch (err) {
-      console.log(err.message);
-      error.value = "could not send the message";
+      error.value = `Ошибка: ${err.message}`;
       isPending.value = false;
     }
   };
